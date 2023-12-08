@@ -1,0 +1,27 @@
+<!-- blog/templates/blog/post_detail.html -->
+
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.seo_title }}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p class="card-text">{{ post.content|linebreaks }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Published by {{ post.author.username }}</li>
+            <li class="list-group-item">Published on {{ post.published_date }}</li>
+            <li class="list-group-item">
+
+                {% for comments in post.comment.all %}
+                    <p>{{ comments.created_date }}</p>
+                    <p>{{ comments.user }}</p>
+                    <p>{{ comments.body }}</p>
+                {% endfor %}
+
+            </li>
+        </ul>
+    </div>
+{% endblock %}
