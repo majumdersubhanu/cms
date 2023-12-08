@@ -1,14 +1,14 @@
-<!-- blog/templates/blog/comment_form.html -->
+<!-- blog/templates/blog/post_form.html -->
 
 {% extends 'blog/base.html' %}
 
-{% block title %}Comments{% endblock %}
+{% block title %}New Post{% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <form method="post" class="p-4 border rounded">
             {% csrf_token %}
-            <h2 class="mb-4">Add a Comment</h2>
+            <h2 class="mb-4">Create a New Post</h2>
 
             {{ form.as_p }}
 

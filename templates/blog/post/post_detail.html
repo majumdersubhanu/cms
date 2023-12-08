@@ -35,7 +35,7 @@
                                         {{ comment.created_date }}</small>
                                 </div>
                                 <div class="card-body">
-                                    {{ comment.body }}
+                                    {{ comment.body|linebreaks }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -45,10 +45,6 @@
                 </div>
             </div>
 
-            <!-- Sidebar (if needed) -->
-            <div class="col-md-4">
-                <!-- Add sidebar content here if needed -->
-            </div>
         </div>
     </div>
 {% endblock %}

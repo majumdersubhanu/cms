@@ -24,40 +24,38 @@
                     </h1>
                 </div>
                 <hr>
-                {% for post in posts %}
-                    <div class="mb-4">
-                        <h2 class="mb-2">
-                            <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
-                                {{ post.title }}
-                            </a>
-                        </h2>
-                        <p class="text-muted small">
-                            Written by {{ post.author.username }} on
-                            {% if post.status == 'published' %}
-                                {{ post.published_date }}
-                            {% else %}
-                                {{ post.updated_date }}
-                            {% endif %}
+                {% if posts %}
+                    {% for post in posts %}
+                        <div class="mb-4">
+                            <h2 class="mb-2">
+                                <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
+                                    {{ post.title }}
+                                </a>
+                            </h2>
+                            <p class="text-muted small">
+                                Written by {{ post.author.username }} on
+                                {% if post.status == 'published' %}
+                                    {{ post.published_date }}
+                                {% else %}
+                                    {{ post.updated_date }}
+                                {% endif %}
 
-                        {% if not category %}
-                            <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
-                                {{ post.category }}
-                            </a>
-                        {% endif %}
-                        </p>
-                        <p>{{ post.content|truncatewords:40 }}</p>
+                                {% if not category %}
+                                    <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
+                                        {{ post.category }}
+                                    </a>
+                                {% endif %}
+                            </p>
+                            <p>{{ post.content|truncatewords:40 }}</p>
 
-                    </div>
-                    <hr>
-                {% endfor %}
-            </div>
-
-            <div class="col-md-4">
-                <div class="mb-4">
-                    <h1 class="page-header">Sidebar</h1>
-                    <hr>
-                </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>No posts found</p>
+                {% endif %}
             </div>
         </div>
+        {% include 'blog/paginator.html' %}
     </div>
 {% endblock %}
