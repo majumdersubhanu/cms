@@ -6,8 +6,9 @@ from blog.models import Category
 
 
 def user_context(request):
-    user = User.objects.all()
-    return {'authors': user}
+    author = User.objects.all()
+    user = request.user
+    return {'authors': author, 'user': user}
 
 
 def categories_context(request):

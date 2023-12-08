@@ -104,6 +104,7 @@ def add_comment(request, slug):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
+            comment.user = request.user.username
             comment.save()
             return redirect('blog:post_detail', slug=post.slug)
     else:

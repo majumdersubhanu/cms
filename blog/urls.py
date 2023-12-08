@@ -14,7 +14,7 @@ urlpatterns = [
     path('backend/posts/<slug:slug>/delete/', delete_post, name='delete_post'),
     path('posts/author/<str:author_name>', author_filter, name='author_filter'),
 
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('register/', register, name='register'),
+    path('accounts/login/', LoginView.as_view(), name='login'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('accounts/register/', register, name='register'),
 ]

@@ -20,9 +20,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'blog:list_of_posts' %}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'blog:post_list_backend' %}">Dashboard</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:post_list_backend' %}">Dashboard</a>
+                    </li>
+                {% endif %}
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="authorsDropdown" role="button"
@@ -37,21 +40,38 @@
                         {% endfor %}
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Categories
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                        <!-- Add dynamically generated category links here -->
-                        {% for category in categories %}
-                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-                        {% endfor %}
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'blog:add_post' %}">New Post</a>
-                </li>
+                {% if categories %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                            <!-- Add dynamically generated category links here -->
+                            {% for category in categories %}
+                                <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>   
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:add_post' %}">New Post</a>
+                    </li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:register' %}">Register</a>
+                    </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:logout' %}">Logout</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
