@@ -12,52 +12,48 @@
 
 {% block content %}
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="page-header">
-                    <h1>
-                        {% if category %}
-                            Our Latest Posts on {{ category.name }}
-                            {% elif author %}
-                            Latest Posts by {{ author }}
+        <div class="page-header">
+            <h1>
+                {% if category %}
+                    Our Latest Posts on {{ category.name }}
+                {% elif author %}
+                    Latest Posts by {{ author }}
+                {% else %}
+                    Our Latest Posts
+                {% endif %}
+            </h1>
+        </div>
+        <hr>
+        {% if posts %}
+            {% for post in posts %}
+                <div class="mb-4">
+                    <h2 class="mb-2">
+                        <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
+                            {{ post.title }}
+                        </a>
+                    </h2>
+                    <p class="text-muted small">
+                        Written by {{ post.author.username }} on
+                        {% if post.status == 'published' %}
+                            {{ post.published_date }}
                         {% else %}
-                            Our Latest Posts
+                            {{ post.updated_date }}
                         {% endif %}
-                    </h1>
+
+                        {% if not category %}
+                            <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
+                                {{ post.category }}
+                            </a>
+                        {% endif %}
+                    </p>
+                    <p>{{ post.content|truncatewords:40 }}</p>
+
                 </div>
                 <hr>
-                {% if posts %}
-                    {% for post in posts %}
-                        <div class="mb-4">
-                            <h2 class="mb-2">
-                                <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
-                                    {{ post.title }}
-                                </a>
-                            </h2>
-                            <p class="text-muted small">
-                                Written by {{ post.author.username }} on
-                                {% if post.status == 'published' %}
-                                    {{ post.published_date }}
-                                {% else %}
-                                    {{ post.updated_date }}
-                                {% endif %}
-
-                                {% if not category %}
-                                    <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
-                                        {{ post.category }}
-                                    </a>
-                                {% endif %}
-                            </p>
-                            <p>{{ post.content|truncatewords:40 }}</p>
-
-                        </div>
-                        <hr>
-                    {% endfor %}
-                {% else %}
-                    <p>No posts found</p>
-                {% endif %}
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <p>No posts found</p>
+        {% endif %}
         {% include 'blog/paginator.html' %}
     </div>
 {% endblock %}
