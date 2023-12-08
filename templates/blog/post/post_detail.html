@@ -2,26 +2,53 @@
 
 {% extends 'blog/base.html' %}
 
+{% block description %} {{ post.seo_description }}{% endblock %}
 {% block title %}{{ post.seo_title }}{% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title">{{ post.title }}</h2>
-            <p class="card-text">{{ post.content|linebreaks }}</p>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <article>
+                    <h2 class="mb-4">{{ post.title }}</h2>
+                    <hr class="my-4">
+                    <p class="text-muted">
+                        Written by {{ post.author.username }} on {{ post.published_date }}
+                    </p>
+                    <hr class="my-4">
+                    <div>
+                        {{ post.content|linebreaks }}
+                    </div>
+                </article>
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">Comments ({{ comments.count }})</h4>
+                <a href="{% url 'blog:add_comment' slug=post.slug %}" class="btn btn-primary mb-3">Leave a comment</a>
+
+                <div class="comments-section">
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div class="card my-3">
+                                <div class="card-header">
+                                    <small class="text-muted">{{ comment.user }} commented on
+                                        {{ comment.created_date }}</small>
+                                </div>
+                                <div class="card-body">
+                                    {{ comment.body }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No comments yet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Sidebar (if needed) -->
+            <div class="col-md-4">
+                <!-- Add sidebar content here if needed -->
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Published by {{ post.author.username }}</li>
-            <li class="list-group-item">Published on {{ post.published_date }}</li>
-            <li class="list-group-item">
-
-                {% for comments in post.comment.all %}
-                    <p>{{ comments.created_date }}</p>
-                    <p>{{ comments.user }}</p>
-                    <p>{{ comments.body }}</p>
-                {% endfor %}
-
-            </li>
-        </ul>
     </div>
 {% endblock %}

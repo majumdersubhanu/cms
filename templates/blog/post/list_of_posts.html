@@ -1,32 +1,63 @@
+<!-- blog/templates/blog/post_list.html -->
+
 {% extends 'blog/base.html' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}
+    {% if category %}
+        Category - {{ category.name }}
+    {% else %}
+        Posts
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-    <h1>Post List</h1>
-    <div class="d-flex flex-wrap">
-        {% for post in posts %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 mx-2">
-                    <div class="card-body">
-                        <h5 class="card-title"><a class="text-decoration-none" href="{{ post.get_absolute_url }}"
-                        >{{ post.title }}</a></h5>
-                        <p class="card-text">{{ post.content|truncatewords:40 }}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Published by {{ post.author.username }}</li>
-                        {% if post.status == 'published' %}
-                        <li class="list-group-item">Published on {{ post.published_date }}</li>
-                            {% else %}
-                        <li class="list-group-item">Last edited on {{ post.updated_date }}</li>
-
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h1>
+                        {% if category %}
+                            Our Latest Posts on {{ category.name }}
+                        {% else %}
+                            Our Latest Posts
                         {% endif %}
-                        <li class="list-group-item">Categories:<a class="text-decoration-none" href=
-                                "{{ post.category.get_absolute_url }}">
-                            {{ post.category }}</a></li>
-                    </ul>
+                    </h1>
+                </div>
+                <hr>
+                {% for post in posts %}
+                    <div class="mb-4">
+                        <h2 class="mb-2">
+                            <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
+                                {{ post.title }}
+                            </a>
+                        </h2>
+                        <p class="text-muted small">
+                            Written by {{ post.author.username }} on
+                            {% if post.status == 'published' %}
+                                {{ post.published_date }}
+                            {% else %}
+                                {{ post.updated_date }}
+                            {% endif %}
+
+                        {% if not category %}
+                            <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
+                                {{ post.category }}
+                            </a>
+                        {% endif %}
+                        </p>
+                        <p>{{ post.content|truncatewords:40 }}</p>
+
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <h1 class="page-header">Sidebar</h1>
+                    <hr>
                 </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
