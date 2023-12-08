@@ -8,5 +8,6 @@ urlpatterns = [
     path('posts/category/<str:category_slug>', category_filter, name='category_filter'),
     path('posts/<slug:slug>/', add_comment, name='add_comment'),
     path('backend/post/new/', add_post, name='add_post'),
+    path('backend/posts', list_of_all_posts, name='post_list_backend'),
     path('posts/author/<str:author_name>', author_filter, name='author_filter'),
 ]
