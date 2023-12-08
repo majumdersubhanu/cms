@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 def list_of_posts(request):
     posts = Post.objects.filter(status='published')
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 3)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -28,7 +28,7 @@ def list_of_posts(request):
 
 def list_of_drafts(request):
     posts = Post.objects.filter(status='draft')
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 3)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)

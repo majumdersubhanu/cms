@@ -38,8 +38,7 @@
                             {{ post.published_date }}
                         {% else %}
                             {{ post.updated_date }}
-                        {% endif %}
-
+                        {% endif %}     in
                         {% if not category %}
                             <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
                                 {{ post.category }}
