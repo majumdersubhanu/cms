@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
 from blog.forms import CommentForm, PostForm
@@ -34,7 +35,7 @@ def list_of_drafts(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments = Comment.objects.filter(post=post)
+    comments = Comment.objects.filter(post=post).filter(approved=True)
     context = {'post': post, 'comments': comments}
 
     if post.status == 'published':
@@ -50,6 +51,15 @@ def category_filter(request, category_slug):
     posts = Post.objects.filter(category=category_slug)
     template = 'blog/post/list_of_posts.html'
     context = {'posts': posts, 'category': category_slug}
+    return render(request, template, context)
+
+
+def author_filter(request, author_name):
+    author_name = author_name.lower()
+    author = get_object_or_404(User, username=author_name)
+    posts = Post.objects.filter(author=author)
+    template = 'blog/post/list_of_posts.html'
+    context = {'posts': posts, 'author': author_name}
     return render(request, template, context)
 
 

@@ -21,7 +21,8 @@
                 <h5>Authors</h5>
                 {% if all_users %}
                     {% for user in all_users %}
-                        <a href="#" class="text-decoration-none">{{ user.username }}</a>
+                        <a href="{% url 'blog:author_filter' user.username %}" class="text-decoration-none"
+                        >{{ user.username }}</a>
                         <br>
                     {% endfor %}
                 {% endif %}

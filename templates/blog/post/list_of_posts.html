@@ -18,6 +18,8 @@
                     <h1>
                         {% if category %}
                             Our Latest Posts on {{ category.name }}
+                            {% elif author %}
+                            Latest Posts by {{ author }}
                         {% else %}
                             Our Latest Posts
                         {% endif %}

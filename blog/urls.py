@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_of_posts, post_detail, category_filter, list_of_drafts, add_comment,add_post
+from .views import *
 
 urlpatterns = [
     path('posts/', list_of_posts, name='list_of_posts'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('posts/category/<str:category_slug>', category_filter, name='category_filter'),
     path('posts/<slug:slug>/', add_comment, name='add_comment'),
     path('post/new/', add_post, name='add_post'),
+    path('posts/author/<str:author_name>', author_filter, name='author_filter'),
 ]
