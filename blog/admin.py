@@ -6,9 +6,9 @@ from blog.models import Post, Category, Comment
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'published_date', 'category')
-    search_fields = ('title', 'author', 'published_date', 'category', 'content')
+    list_display = ('title', 'author', 'published_date', 'status')
     list_filter = ('published_date', 'category', 'author')
+    search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
 
 

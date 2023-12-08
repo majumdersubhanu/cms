@@ -23,6 +23,7 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category', blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'slug': self.slug})

@@ -27,18 +27,26 @@
         {% if posts %}
             {% for post in posts %}
                 <div class="mb-4">
+                    <div class="d-flex justify-content-center">
+                        {% if post.image %}
+                        <img src="{{ post.image.url|safe }}" alt="{{ post.title }}" class="img-fluid mb-3"
+                             style="max-width: 70%; height: auto;">
+                        <!-- Adjust the max-width property as needed (e.g., 70%) -->
+                    {% endif %}
+                    </div>
                     <h2 class="mb-2">
                         <a class="text-decoration-none" href="{{ post.get_absolute_url }}">
                             {{ post.title }}
                         </a>
                     </h2>
+
                     <p class="text-muted small">
                         Written by {{ post.author.username }} on
                         {% if post.status == 'published' %}
                             {{ post.published_date }}
                         {% else %}
                             {{ post.updated_date }}
-                        {% endif %}     in
+                        {% endif %} in
                         {% if not category %}
                             <a class="text-decoration-none" href="{{ post.category.get_absolute_url }}">
                                 {{ post.category }}
@@ -46,7 +54,6 @@
                         {% endif %}
                     </p>
                     <p>{{ post.content|truncatewords:40 }}</p>
-
                 </div>
                 <hr>
             {% endfor %}

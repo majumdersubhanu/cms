@@ -7,7 +7,7 @@ from blog.models import Category
 
 def user_context(request):
     user = User.objects.all()
-    return {'all_users': user}
+    return {'authors': user}
 
 
 def categories_context(request):

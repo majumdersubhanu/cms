@@ -9,5 +9,7 @@ urlpatterns = [
     path('posts/<slug:slug>/', add_comment, name='add_comment'),
     path('backend/posts/new/', add_post, name='add_post'),
     path('backend/posts', list_of_all_posts, name='post_list_backend'),
+    path('backend/posts/<slug:slug>/edit', edit_post, name='edit_post'),
+    path('backend/posts/<slug:slug>/delete/', delete_post, name='delete_post'),
     path('posts/author/<str:author_name>', author_filter, name='author_filter'),
 ]

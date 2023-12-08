@@ -23,4 +23,4 @@ for category in categories:
         slug=category.lower(),
     )
 
-print("10 categories have been created.")
+print(f"{len(categories)} categories have been created.")

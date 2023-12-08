@@ -20,7 +20,7 @@ for _ in range(15):
     author = random.choice(User.objects.all())
     title = fake.sentence()
     slug = fake.slug()
-    content = fake.paragraphs(5)
+    content = fake.paragraphs(nb=5, )
     seo_title = fake.sentence()
     seo_description = fake.paragraph()
     published_date = timezone.now()

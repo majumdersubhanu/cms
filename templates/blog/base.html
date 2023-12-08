@@ -9,36 +9,56 @@
 </head>
 <body>
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8">
-            {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-            <div class="mb-4">
-                <h1 class="page-header">Sidebar</h1>
-                <hr>
-                <h5>Authors</h5>
-                {% if all_users %}
-                    {% for user in all_users %}
-                        <a href="{% url 'blog:author_filter' user.username %}" class="text-decoration-none"
-                        >{{ user.username }}</a>
-                        <br>
-                    {% endfor %}
-                {% endif %}
-                <hr>
-                <h5>Categories</h5>
-                {% if categories %}
-                    {% for category in categories %}
-                        <a href="{{ category.get_absolute_url }}" class="text-decoration-none">{{ category.name }}</a>
-                        <br>
-                    {% endfor %}
-                {% endif %}
-                <hr>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:list_of_posts' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:post_list_backend' %}">Dashboard</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="authorsDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Authors
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="authorsDropdown">
+                        <!-- Add dynamically generated author links here -->
+                        {% for author in authors %}
+                            <a class="dropdown-item"
+                               href="{% url 'blog:author_filter' author.username %}">{{ author.username }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                        <!-- Add dynamically generated category links here -->
+                        {% for category in categories %}
+                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:add_post' %}">New Post</a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
+
+{% include 'blog/messages.html' %}
+{% block content %}{% endblock %}
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

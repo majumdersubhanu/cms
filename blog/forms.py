@@ -16,7 +16,7 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'category', 'seo_title', 'seo_description', 'status']
+        fields = ['title', 'content', 'category', 'seo_title', 'seo_description', 'status', 'image']
         widgets = {
             'title': forms.TextInput(attrs={'class': "form-control"}),
             'content': forms.Textarea(attrs={'class': "form-control"}),
@@ -24,4 +24,5 @@ class PostForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': "form-control"}),
             'seo_title': forms.TextInput(attrs={'class': "form-control"}),
             'seo_description': forms.Textarea(attrs={'class': "form-control"}),
+            'image': forms.FileInput(attrs={'class': "form-control"})
         }

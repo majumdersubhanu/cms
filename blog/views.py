@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from blog.forms import CommentForm, PostForm
@@ -124,3 +126,27 @@ def add_post(request):
     template = 'blog/new_post.html'
     context = {'form': form}
     return render(request, template, context)
+
+
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('blog:post_list_backend')
+    else:
+        form = PostForm(instance=post)
+    template = 'blog/new_post.html'
+    context = {'form': form}
+    return render(request, template, context)
+
+
+def delete_post(request, slug):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    post = get_object_or_404(Post, slug=slug)
+    post.delete()
+    messages.success(request, 'Successfully deleted post')
+    return redirect('blog:post_list_backend')
