@@ -28,6 +28,17 @@ def list_of_posts(request):
 
 def list_of_drafts(request):
     posts = Post.objects.filter(status='draft')
+    paginator = Paginator(posts, 2)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        if int(page) > paginator.num_pages:
+            posts = paginator.page(paginator.num_pages)
+        else:
+            posts = paginator.page(1)
     context = {'posts': posts}
     template = 'blog/post/list_of_posts.html'
     return render(request, template, context)
