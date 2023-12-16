@@ -50,7 +50,7 @@ def list_of_drafts(request):
 
 
 def list_of_all_posts(request):
-    posts = Post.objects.filter(author=request.user)
+    posts = Post.objects.all()
     paginator = Paginator(posts, 10)
     page = request.GET.get('page')
     try:
@@ -119,7 +119,7 @@ def add_comment(request, slug):
 ###########
 def add_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -135,7 +135,7 @@ def add_post(request):
 def edit_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post, )
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
